@@ -1,0 +1,30 @@
+sensor:
+  - platform: mqtt
+    name: "Toilet Temperature"
+    state_topic: "toilet_state"
+    unit_of_measurement: "°C"  
+    value_template: '{{ value_json.temp }}'
+  - platform: mqtt
+    name: "Toilet Humidity"
+    unit_of_measurement: '%'
+    state_topic: "toilet_state"
+    value_template: '{{ value_json.humidity | round(2) }}'
+  - platform: mqtt
+    name: "Toilet Movement"
+    state_topic: "toilet_state"
+    value_template: '{{ value_json.movement }}'
+  - platform: mqtt
+    name: "Toilet Fan"
+    state_topic: "toilet_state"
+    value_template: '{{ value_json.fan }}'
+    
+switch:
+  - platform: mqtt
+    name: "Toilet Fan Switch"
+    state_topic: "toilet_state"
+    value_template: "{{ value_json.fan }}"
+    command_topic: "toilet_set"
+    payload_on: '{"fanStatus":true}'
+    payload_off: '{"fanStatus":false}' 
+    state_on: true
+    state_off: false
